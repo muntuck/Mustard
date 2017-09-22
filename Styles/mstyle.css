@@ -1,0 +1,280 @@
+ 
+/* 
+     
+    Author     : muntuck Yap
+*/
+
+/*
+ * to repeat headers when printing
+*/
+
+
+@media print {
+   thead {display: table-header-group;}
+}
+
+tr{cursor: pointer; transition: all .25s ease-in-out}
+.selected{background-color: yellow; font-weight: bold;  color: red;}
+
+#banner
+{
+    background-image: url(../Images/nature1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: 2px solid #dedede;    
+    height: 105px;
+}
+
+body
+{
+    font-family: lucida grande ,tahoma,verdana,arial,sans-serif;
+    background-color: #e9e9e9;
+}
+
+body p
+{
+    font-size: 0.8em;
+    line-height: 1.28;
+}
+
+.header-cont {
+    width:700px;
+    position:fixed;
+    top:0px;
+}
+
+
+.button {
+    background-color: #4CAF50; /* Green */
+    border-radius: 8px;
+    border: none;
+    margin: auto;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+}
+
+.buttonRed {
+    background-color:  #f44336; /* Red */
+    border-radius: 8px;
+    border: none;
+    color: white;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.buttonBlue {
+    background-color: #008CBA;  /* blue */
+    text-align: center;
+    display: inline-block;
+}
+
+#Cam
+{
+    text-align: center;
+    background:rgb(255,255,215);
+}
+
+.clientTb {
+  table-layout: fixed;
+  border-collapse: collapse;
+  width: 100%;       
+  text-align: left;
+}
+
+.clientTb td {
+  text-align: left;
+  border: 1px solid #999;
+  padding: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+
+
+.container {
+    display:inline-block;
+    width:320px;
+}
+	/*  Define the background color for all the ODD background rows  */
+.clientTb tr:nth-child(odd) { 
+    background: #b8d1f3;
+}
+	/*  Define the background color for all the EVEN background rows  */
+.clientTb tr:nth-child(even) {
+    background: #dae5f4;
+}
+
+
+#content_area {
+    float: left;
+    width: 700px; 
+    margin: 10px 0 10px 0;
+    padding: 10px;
+}
+
+footer {
+    clear: both;
+    width: auto;
+    height: 40px;
+    padding: 10px;
+    border: 3px solid #E3E3E3;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0.1em 0.1em #333;
+    background-image: url(../Images/bar_background.png);
+}
+
+.imgLeft {
+    float: left;
+    width: 240px;
+    height: 150px;
+    margin: 0px 10px 10px 0;
+    padding: 10px;
+}
+
+.imgRight {
+    float: right;
+    width: 200px;
+    height: 250px;
+    margin: 0px 0 10px 10px;
+    padding: 10px;
+}
+
+.imgCenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 260px;
+    height: 200px;
+    margin: 0px 0 5px 5px;
+    padding: 5px;
+}
+
+nav ul{
+        padding: 0;
+        list-style: none;
+        background: #f2f2f2;
+}
+    
+nav ul li{
+        display: inline-block;
+        position: relative;
+        line-height: 21px;
+        text-align: left;
+}
+    
+nav ul li a{
+        display: block;
+        padding: 8px 25px;
+        color: #333;
+        text-decoration: none;
+}
+    
+nav ul li a:hover{
+        color: #fff;
+        background: #939393;
+}
+    
+nav ul li ul.dropdown{
+        min-width: 100%; /* Set width of the dropdown */
+        background: #f2f2f2;
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+}
+    
+nav ul li:hover ul.dropdown{
+        display: block;	/* Display the dropdown */
+}
+    
+nav ul li ul.dropdown li{
+        display: block;
+}
+    
+#navigation {
+    height: 50px;
+    border: 2px solid #E3E3E3;
+    margin-top: 0px;
+}
+
+#Prev {
+    text-align: center;
+    background:rgb(255,255,155);
+}
+
+
+/* Column widths are based on these cells */
+.row-100 {
+    width: 100%;
+}
+.row-50 {
+    width: 50%;
+}
+.row-Field {
+    width: 25%;
+}
+.row-Value {
+    width: 70%;
+}
+.row-ID {
+  width: 10%;
+}
+.row-Name {
+  width: 20%;
+}
+.row-Phone {
+  width: 20%;
+}
+.row-15 {
+    width: 15%;
+}
+.row-Action {
+  width: 10%;
+}
+.row-Small {
+  width: 5%;
+}
+.row-Number {
+  width: 7%;
+}
+.row-3 {
+  width: 3%;
+}
+
+
+
+
+#Saved {
+    text-align: center;
+    background:rgb(255,255,55);
+}
+
+#sidebar {
+    float: right;
+    width: 300px; 
+    height: 550px;
+    margin: 10px 10px;
+    padding: 10px;
+    border: 3px solid #E3E3E3;
+}
+
+span {
+   font-weight: normal;
+}
+    
+#wrapper {
+    width: 1100px; 
+    height: 100%;
+    background-color: white;
+    margin: 0 auto;
+    padding: 10px;
+    border: 5px solid #dedede;
+}

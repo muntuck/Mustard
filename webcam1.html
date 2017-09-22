@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>WebCam 1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <center><video id="video" width="400" height="300" style="border:1px solid #d3d3d3;" autoplay></video>
+        <canvas id="canvas" width="400" height="300" style="border:1px solid #d3d3d3;"></canvas>
+        
+        <br>
+        <button id="snap" style="background-color:yellow;font-size:20px;width:200px;height:50px;"><b>Snap Photo</b></button>
+        <button id="savep" style="background-color:greenyellow;font-size:20px;width:200px;height:50px;"><b>Save Photo</b></button>
+        </center>
+        
+        <script>
+            // Put event listeners into place
+            window.addEventListener("DOMContentLoaded", function() {
+			// Grab elements, create settings, etc.
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                var video = document.getElementById('video');
+                var savep = document.getElementById('savep');
+                var mediaConfig =  { video: true };
+                var errBack = function(e) {
+                    console.log('An error has occurred!', e)
+                };
+
+                            // Put video listeners into place
+                if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    });
+                }
+
+                /* Legacy code below! */
+                else if(navigator.getUserMedia) { // Standard
+                                    navigator.getUserMedia(mediaConfig, function(stream) {
+                                            video.src = stream;
+                                            video.play();
+                                    }, errBack);
+                            } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+                                    navigator.webkitGetUserMedia(mediaConfig, function(stream){
+                                            video.src = window.webkitURL.createObjectURL(stream);
+                                            video.play();
+                                    }, errBack);
+                            } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+                                    navigator.mozGetUserMedia(mediaConfig, function(stream){
+                                            video.src = window.URL.createObjectURL(stream);
+                                            video.play();
+                                    }, errBack);
+                            }
+
+                            // Trigger photo take
+                            document.getElementById('snap').addEventListener('click', function() {
+                                    context.drawImage(video, 0,0, 400, 300);
+                            });
+                            
+                                                        // upload photo to server
+                            document.getElementById('savep').addEventListener('click', function() {
+                                document.getElementById("demo").innerHTML = "savep function";
+                                
+                                var dataUrl = canvas.toDataURL("image/jpeg", 0.85);                             
+                                $.get("test.php", { imgBase64: "dataUrl" });
+                                                               
+                            });
+
+                }, false);
+        </script>
+        <p id="demo">A Paragraph</p>
+    </body>
+</html>

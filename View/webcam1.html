@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Take Photo of Client</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <center>
+            <video id="video" width="400" height="300" style="border:1px solid #d3d3d3;" autoplay></video>
+            <canvas id="canvas" width="400" height="300" style="border:1px solid #d3d3d3;"></canvas>
+            <br>
+            <button id="snap" style="background-color:yellow;font-size:20px;width:200px;height:50px;"><b>Snap Photo</b></button>
+            <button id="savep" style="background-color:greenyellow;font-size:20px;width:200px;height:50px;"><b>Save Photo</b></button>
+            <br><br>
+            <p id="saveStatus" > xxxxxxxxxx </p>
+            <br>
+            <br>
+        </center>
+        
+        <script>
+            // get parameters from URL
+            var clientID = getURIParameter('clientID');    
+            var lastName = getURIParameter('lastName');
+            
+            // Put event listeners into place
+            window.addEventListener("DOMContentLoaded", function() {
+			// Grab elements, create settings, etc.
+                var canvas = document.getElementById('canvas');
+                var context = canvas.getContext('2d');
+                var video = document.getElementById('video');     
+                var saveStatus = document.getElementById('saveStatus');
+                var mediaConfig =  { video: true };
+                var errBack = function(e) {
+                    console.log('An error has occurred!', e)
+                };
+
+                            // Put video listeners into place
+                if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    });
+                }
+
+                /* Legacy code below! */
+                else if(navigator.getUserMedia) { // Standard
+                                    navigator.getUserMedia(mediaConfig, function(stream) {
+                                            video.src = stream;
+                                            video.play();
+                                    }, errBack);
+                            } else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+                                    navigator.webkitGetUserMedia(mediaConfig, function(stream){
+                                            video.src = window.webkitURL.createObjectURL(stream);
+                                            video.play();
+                                    }, errBack);
+                            } else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+                                    navigator.mozGetUserMedia(mediaConfig, function(stream){
+                                            video.src = window.URL.createObjectURL(stream);
+                                            video.play();
+                                    }, errBack);
+                            }
+
+                            // Trigger photo take
+                            document.getElementById('snap').addEventListener('click', function() {
+                                    context.drawImage(video, 0,0, 400, 300);
+                                    saveStatus.innerHTML = '<b>Snapshot is not saved</b>';
+                            });
+                            
+                                                        // upload photo to server
+                            document.getElementById('savep').addEventListener('click', function() {                                                             
+                                var dataUrl = canvas.toDataURL("image/jpeg", 0.85);                             
+                                var formdata = new FormData();
+                                formdata.append("clientID", clientID);
+                                formdata.append("lastName", lastName);
+                                formdata.append("base64image", dataUrl);
+                                var ajax = new XMLHttpRequest();
+                                ajax.addEventListener("load", function(event) { uploadcomplete(event);}, false);
+                                ajax.open("POST", "upload.php");
+                                ajax.send(formdata);
+                                
+                                saveStatus.innerHTML='<b>Snapshot is saved</b>';
+                            });
+
+                }, false);
+                
+                /*
+                 * Function to extract parameters from a URL
+                 */
+                function getURIParameter(param, asArray) {
+                    return document.location.search.substring(1).split('&').reduce(function(p,c) {
+                        var parts = c.split('=', 2).map(function(param) { 
+                            return decodeURIComponent(param); });
+                        if(parts.length == 0 || parts[0] != param) return (p instanceof Array) && !asArray ? null : p;
+                        return asArray ? p.concat(parts.concat(true)[1]) : parts.concat(true)[1];
+                    }, []);
+                }
+
+            var str = 
+                "<center><div> "
+                + "<form action='/Mustard/index.php'>"
+                    + "<input type='hidden' name='cmd' value='215'> "
+                    + "<input type='hidden' name='clientID' value='" + clientID + "'>"
+                    + "<input type = 'submit' value='Back to Client Display' class='button' >"
+                + "</form> "
+                + "</div></center>";
+              document.write(str);
+
+        </script>
+
+    </body>
+</html>
